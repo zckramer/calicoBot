@@ -1,7 +1,7 @@
 import asyncio
 import os
 import random
-from TimedMessenger import MessageOnTimer
+from timedMessenger import MessageOnTimer
 from twitchio.ext import commands
 from supabase import create_client, Client
 from dotenv import load_dotenv, dotenv_values
@@ -10,7 +10,7 @@ load_dotenv()
 # Replace these with your own values
 twitchToken: str = os.getenv('TMI_TOKEN')
 twitchClientID: str = os.getenv('CLIENT_ID')
-twitchChannelName: str = os.getenv('CHANNEL_NAME')
+twitchChannelName: str = os.getenv('CHANNEL')
 
 url: str = os.getenv("SUPABASE_URL")
 key: str = os.getenv("SUPABASE_KEY")
