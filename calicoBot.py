@@ -35,13 +35,11 @@ class Bot(commands.Bot):
         print(f'Logged in as | {self.nick}')
 
     async def event_message(self, message):
-        # Print out messages in the terminal
-        print(f'Message from {message.author.name}: {message.content}')
-
         # Call command handler
         await self.handle_commands(message)
-
-        if message.content.startswith('!' + 'selfPromo'):
+        prefix = '>'
+        
+        if message.content.startswith(prefix + 'selfPromo'):
             row = supabase.table("timers").select("*").eq("timer_id", 1).execute()
             phrase = row.data[0]['messages'] 
             frequency = row.data[0]['frequency']  # frequency in seconds
@@ -57,16 +55,10 @@ class Bot(commands.Bot):
                 await message.channel.send('command: selfPromo finished running')
                 await theMessage.stop()
             
-        if message.content.startswith('!' + 'haiku'):
+        if message.content.startswith(prefix + 'haiku'):
             haiku = random.choice(HAIKUS)
             await message.channel.send(haiku)
             
-        if message.content.startswith('!' + 'blues'):
-            blues = supabase.table("timers").select("*").execute()
-            messages = blues.data
-            for phrase in messages:
-                await message.channel.send(phrase['messages'])
-
     @commands.command(name='userinfo')
     async def user_info(self, ctx: commands.Context):
         # Fetch user information
